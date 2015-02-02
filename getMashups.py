@@ -4,7 +4,7 @@ import re
 
 pages = range(248)
 
-for p in pages[147:]:
+for p in pages[]:
 #    print >> sys.stderr, "Downloading mashup list # %d ..." % p,
     listPage = urllib2.urlopen("http://www.programmableweb.com/category/all/mashups?page=%d&order=created&sort=desc" % p).read()
 

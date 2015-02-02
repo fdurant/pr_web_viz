@@ -4,7 +4,7 @@ import re
 
 pages = range(115)
 
-for p in pages[1:]:
+for p in pages[]:
 #    print >> sys.stderr, "Downloading API list # %d ..." % p,
     listPage = urllib2.urlopen("http://www.programmableweb.com/apis/directory?page=%d" % p).read()
 #    print page

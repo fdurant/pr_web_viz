@@ -9,15 +9,15 @@ csvwriter = csv.writer(sys.stdout, delimiter=',')
 
 header = []
 header.append('apiIdNumeric')
-header.append('apiIdName')
+header.append('apiIdString')
 header.append('apiName')
 header.append('apiProvider')
 header.append('apiEndpoint')
 header.append('apiHomepage')
 header.append('apiPrimaryCategory')
-header.append('APIForum')
 header.append('apiNrFollowers')
 header.append('apiNrMashups')
+header.append('APIForum')
 #header.append('')
 csvwriter.writerow(header)
 
@@ -58,7 +58,7 @@ def getNrFollowers(apiPage):
         pattern = re.compile("<span>Followers\s+\((\d+)\)<\/span>")
         nrFollowers = re.search(pattern,apiPage).group(1)
     except AttributeError:
-        nrFollowers = ''
+        nrFollowers = 0
     return nrFollowers
 
 def getNrMashups(apiPage):
@@ -66,14 +66,14 @@ def getNrMashups(apiPage):
         pattern = re.compile("<span>API Mashups\s+\((\d+)\)<\/span>")
         nrMashups = re.search(pattern,apiPage).group(1)
     except AttributeError:
-        nrMashups = ''
+        nrMashups = 0
     return nrMashups
 
 for i,f in enumerate(filelist):
     if i % 100 == 0:
         print >> sys.stderr, "Processing API file %d/%d ..." % (i, len(filelist)),
 
-    with open(f, 'r') as apiFile:
+    with open(f, 'rb') as apiFile:
         apiPage = apiFile.read()
     apiFile.close()
 
@@ -86,9 +86,9 @@ for i,f in enumerate(filelist):
     row.append(getSpecsField(apiPage,'API Endpoint'))
     row.append(getSpecsField(apiPage,'API Homepage'))
     row.append(getSpecsField(apiPage,'Primary Category'))
-    row.append(getSpecsField(apiPage,'API Forum'))
     row.append(getNrFollowers(apiPage))
     row.append(getNrMashups(apiPage))
+    row.append(getSpecsField(apiPage,'API Forum'))
 
     csvwriter.writerow(row)
 
